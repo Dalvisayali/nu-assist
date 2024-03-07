@@ -4,15 +4,16 @@ import openai  # for calling the OpenAI API
 import pandas as pd  # for storing text and embeddings data
 import tiktoken  # for counting tokens
 from scipy import spatial  # for calculating vector similarities for search
+import os
 
 
 # models
 EMBEDDING_MODEL = "text-embedding-ada-002"
 GPT_MODEL = "gpt-4"
-openai.api_key = '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'
+openai.api_key = os.environ["OPENAI_API_KEY"]
 
 # get the embeddings
-embeddings_path = "../embeddings/latest.csv"
+embeddings_path = "../data/embeddings/embedding.csv"
 embedding_df = pd.read_csv(embeddings_path)
 embedding_df['embedding'] = embedding_df['embedding'].apply(ast.literal_eval)
 

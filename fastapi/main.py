@@ -11,6 +11,7 @@ from models.Report import ReportData
 from database import add_admin
 from fastapi.encoders import jsonable_encoder
 from routers import router as routers
+from urllib.parse import quote_plus
 
 config = dotenv_values(".env")
 
@@ -23,6 +24,8 @@ app.include_router(routers, prefix="/api")
 
 @app.on_event("startup")
 def startup_db_client():
+    url = config["MONGODB_CONNECTION_URI"]
+    
     app.mongodb_client = MongoClient(config["MONGODB_CONNECTION_URI"])
     app.database = app.mongodb_client[config["DB_NAME"]]
     print("Connected to the MongoDB database!")
